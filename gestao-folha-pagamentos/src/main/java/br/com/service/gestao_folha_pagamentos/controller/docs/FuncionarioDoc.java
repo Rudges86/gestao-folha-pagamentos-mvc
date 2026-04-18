@@ -1,0 +1,108 @@
+package br.com.service.gestao_folha_pagamentos.controller.docs;
+
+import br.com.service.gestao_folha_pagamentos.data.dto.CadastroFuncionarioRequestDTO;
+import br.com.service.gestao_folha_pagamentos.data.dto.FuncionarioRequestDTO;
+import br.com.service.gestao_folha_pagamentos.data.dto.FuncionarioResponseDTO;
+import br.com.service.gestao_folha_pagamentos.data.dto.ResponseDTOMensage;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import jakarta.validation.Valid;
+import org.springframework.data.web.PagedModel;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.UUID;
+
+public interface FuncionarioDoc {
+
+    @Operation(summary = "Listar todos os funcionários com base no critério de pesquisa",
+            description = "EndPoint para listar todos os funcionários com base no critério de pesquisa escolhido.",
+            tags ={"Funcionário"},
+            responses = {
+                    @ApiResponse(
+                            description = "Success",
+                            responseCode = "200",
+                            content = {
+                                    @Content(
+                                            mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                            array = @ArraySchema(schema = @Schema(implementation = FuncionarioResponseDTO.class))
+                                    )
+                            }),
+                    @ApiResponse(description = "No Content", responseCode = "204", content = @Content),
+                    @ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
+                    @ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content),
+                    @ApiResponse(description = "Not Found", responseCode = "404", content = @Content),
+                    @ApiResponse(description = "Internal Server Error", responseCode = "500", content = @Content)
+            })
+    @GetMapping("/listar-funcionarios")
+    public ResponseEntity<PagedModel<FuncionarioResponseDTO>> listarTodosFuncionarios(
+            @RequestParam(name = "id", required = false) UUID id,
+            @RequestParam(name = "nome", required = false) String nome,
+            @RequestParam(name = "idade", required = false) Integer idade,
+            @RequestParam(name = "bairro", required = false) String bairro,
+            @RequestParam(name = "estado", required = false) String estado,
+            @RequestParam(name = "pais", required = false) String pais,
+            @RequestParam(name = "ativo", required = false) Boolean ativo
+    );
+
+    @Operation(summary = "Cadastra um novo funcionário",
+            description = "Cadastra um novo funcionário.",
+            tags = {"Funcionário"},
+            responses = {
+                    @ApiResponse(
+                            description = "Success",
+                            responseCode = "201",
+                            content = @Content(schema = @Schema(implementation = FuncionarioRequestDTO.class))
+                    ),
+                    @ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
+                    @ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content),
+                    @ApiResponse(description = "Internal Server Error", responseCode = "500", content = @Content)
+            }
+    )
+    @PostMapping("/cadastrar-funcionario")
+    public ResponseEntity<ResponseDTOMensage> cadastrarFuncionario(@RequestBody @Valid CadastroFuncionarioRequestDTO dto);
+
+    @Operation(summary = "Edita alguma informação do funcionário.",
+            description = "Faz o update das informações do usuário",
+            tags = {"Funcionário"},
+            responses = {
+                    @ApiResponse(
+                            description = "Success",
+                            responseCode = "201",
+                            content = @Content(schema = @Schema(implementation = FuncionarioRequestDTO.class))
+                    ),
+                    @ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
+                    @ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content),
+                    @ApiResponse(description = "Internal Server Error", responseCode = "500", content = @Content)
+            }
+    )
+
+    @PutMapping("/atualizarCadastro/{id}")
+    public ResponseEntity<?> atualizarCadastro(@PathVariable(name = "id") UUID id);
+
+
+    @Operation(summary = "Inativa um funcionário na base",
+            description = """
+                    EndPoint criado para substituir o dele, ele vai inativar o funcionário após o desligamento,
+                    para que o cálculo da folha seja feito com os funcionários ativos, mantendo assim um histórico
+                    na base caso um funcionário volte para a empresa.                    
+                    """,
+            tags = {"Funcionário"},
+            responses = {
+                    @ApiResponse(
+                            description = "Success",
+                            responseCode = "201",
+                            content = @Content(schema = @Schema(implementation = FuncionarioRequestDTO.class))
+                    ),
+                    @ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
+                    @ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content),
+                    @ApiResponse(description = "Internal Server Error", responseCode = "500", content = @Content)
+            }
+    )
+    @PutMapping("/inativarFuncionario/{id}")
+    public ResponseEntity<ResponseDTOMensage> desligarFuncionario(@PathVariable(name = "id") UUID id);
+}

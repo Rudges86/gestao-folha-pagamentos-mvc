@@ -1,0 +1,42 @@
+server:
+  port: 8000
+
+spring:
+  application:
+    name: gestao-folha-pagamentos
+  # O H2 Console precisa que isso esteja habilitado para carregar os frames no navegador
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+      settings:
+        trace: false
+        web-allow-others: false
+
+  datasource:
+    url: jdbc:h2:mem:gestao_rh_db
+    driverClassName: org.h2.Driver
+    username: sa
+    password:
+
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    # O ddl-auto e o show-sql ficam neste nível para o Spring Boot reconhecer
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        # Adição importante para evitar erro de frame no H2 Console
+        highlight_sql: true
+  messages:
+    basename: messages
+    encoding: UTF-8
+    fallback-to-system-locale: false
+
+# Configuração do Swagger/OpenAPI
+springdoc:
+  paths-to-match: /api/**
+  swagger-ui:
+    use-root-path: true

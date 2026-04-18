@@ -1,3 +1,12 @@
+server:
+  port: 8000
+
 spring:
   application:
     name: gestao-folha-pagamentos
+  profiles:
+    active: teste
+  spring-doc:
+    paths-to-match: /api/**
+    swagger-ui:
+      use-root-path: true
