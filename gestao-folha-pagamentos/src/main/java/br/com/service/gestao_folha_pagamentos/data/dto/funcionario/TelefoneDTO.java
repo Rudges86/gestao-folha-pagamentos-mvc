@@ -1,4 +1,4 @@
-package br.com.service.gestao_folha_pagamentos.data.dto;
+package br.com.service.gestao_folha_pagamentos.data.dto.funcionario;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

@@ -1,16 +1,15 @@
-package br.com.service.gestao_folha_pagamentos.data.dto;
+package br.com.service.gestao_folha_pagamentos.data.dto.funcionario;
 
 import br.com.service.gestao_folha_pagamentos.model.enumerated.TipoContratacao;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
-public record CadastroFuncionarioRequestDTO(
+public record FuncionarioRequestDTO(
         @NotNull(message = "{MSG01}")
         @NotBlank(message = "{MSG01}")
         String nome,

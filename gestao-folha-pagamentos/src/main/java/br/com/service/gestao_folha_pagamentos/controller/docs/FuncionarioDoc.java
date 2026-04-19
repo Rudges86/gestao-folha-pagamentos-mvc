@@ -1,16 +1,18 @@
 package br.com.service.gestao_folha_pagamentos.controller.docs;
 
-import br.com.service.gestao_folha_pagamentos.data.dto.CadastroFuncionarioRequestDTO;
-import br.com.service.gestao_folha_pagamentos.data.dto.FuncionarioRequestDTO;
-import br.com.service.gestao_folha_pagamentos.data.dto.FuncionarioResponseDTO;
 import br.com.service.gestao_folha_pagamentos.data.dto.ResponseDTOMensage;
+import br.com.service.gestao_folha_pagamentos.data.dto.funcionario.FiltroPesquisaFuncionarioDTO;
+import br.com.service.gestao_folha_pagamentos.data.dto.funcionario.FuncionarioRequestDTO;
+import br.com.service.gestao_folha_pagamentos.data.dto.funcionario.FuncionarioResponseDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.Valid;
-import org.springframework.data.web.PagedModel;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -39,14 +41,9 @@ public interface FuncionarioDoc {
                     @ApiResponse(description = "Internal Server Error", responseCode = "500", content = @Content)
             })
     @GetMapping("/listar-funcionarios")
-    public ResponseEntity<PagedModel<FuncionarioResponseDTO>> listarTodosFuncionarios(
-            @RequestParam(name = "id", required = false) UUID id,
-            @RequestParam(name = "nome", required = false) String nome,
-            @RequestParam(name = "idade", required = false) Integer idade,
-            @RequestParam(name = "bairro", required = false) String bairro,
-            @RequestParam(name = "estado", required = false) String estado,
-            @RequestParam(name = "pais", required = false) String pais,
-            @RequestParam(name = "ativo", required = false) Boolean ativo
+    public ResponseEntity<Page<FuncionarioResponseDTO>> listarTodosFuncionarios(
+            FiltroPesquisaFuncionarioDTO filtro,
+            @PageableDefault(size = 10, sort = "nome") Pageable page
     );
 
     @Operation(summary = "Cadastra um novo funcionário",
@@ -64,7 +61,7 @@ public interface FuncionarioDoc {
             }
     )
     @PostMapping("/cadastrar-funcionario")
-    public ResponseEntity<ResponseDTOMensage> cadastrarFuncionario(@RequestBody @Valid CadastroFuncionarioRequestDTO dto);
+    public ResponseEntity<ResponseDTOMensage> cadastrarFuncionario(@RequestBody @Valid FuncionarioRequestDTO dto);
 
     @Operation(summary = "Edita alguma informação do funcionário.",
             description = "Faz o update das informações do usuário",
@@ -82,7 +79,7 @@ public interface FuncionarioDoc {
     )
 
     @PutMapping("/atualizarCadastro/{id}")
-    public ResponseEntity<?> atualizarCadastro(@PathVariable(name = "id") UUID id);
+    public ResponseEntity<FuncionarioResponseDTO> atualizarCadastro(@PathVariable(name = "id") UUID id, @RequestBody FuncionarioRequestDTO dto );
 
 
     @Operation(summary = "Inativa um funcionário na base",
