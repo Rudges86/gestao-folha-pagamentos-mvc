@@ -10,32 +10,32 @@ import java.time.LocalDate;
 import java.util.List;
 
 public record FuncionarioRequestDTO(
-        @NotNull(message = "{MSG01}")
-        @NotBlank(message = "{MSG01}")
+
+        @NotBlank(message = "MSG01")
         String nome,
-        @NotNull(message = "{MSG02}")
+        @NotNull(message = "MSG02")
         Integer idade,
-        @NotNull(message = "{MSG04}")
+        @NotNull(message = "MSG04")
         LocalDate dataNascimento,
-        @NotNull(message = "{MSG08}")
+        @NotNull(message = "MSG08")
         Character sexo,
-        @NotNull(message = "{MSG09}")
-        @NotBlank(message = "{MSG09}")
+
+        @NotBlank(message = "MSG09")
         String escolaridade,
-        @NotNull(message = "{MSG10}")
-        @NotBlank(message = "{MSG10}")
+
+        @NotBlank(message = "MSG10")
         String funcao,
-        @NotNull(message = "{MSG05}")
+        @NotNull(message = "MSG05")
         BigDecimal salario,
         @NotNull
         TipoContratacao tipoContratacao,
         Boolean ativo,
         LocalDate dataDesligamento,
         @Valid
-        @NotNull(message = "{MSG11}")
+        @NotNull(message = "MSG11")
         List<TelefoneDTO> telefone,
         @Valid
-        @NotNull(message = "{MSG12}")
+        @NotNull(message = "MSG12")
         EnderecoDTO endereco
 ) {
 }

@@ -39,6 +39,8 @@ public class FuncionarioService {
         logger.info("Salvando o usuário.");
         entity.getEndereco().setFuncionario(entity);
         entity.getTelefones().forEach(e -> e.setFuncionario(entity));
+        entity.setIsAtivo(true);
+        entity.setMatricula(gerarMatricula());
         repository.save(entity);
         logger.info("Salvo com sucesso.");
         return new ResponseDTOMensage("MSG24", source.getMessage("MSG24", null, null));
@@ -50,7 +52,14 @@ public class FuncionarioService {
         var funcionario = findByID(id);
         funcionario.setIsAtivo(false);
         funcionario.setDataDesligamento(LocalDate.now());
-        return new ResponseDTOMensage("MSG24", source.getMessage("MSG25", null, null));
+        return new ResponseDTOMensage("MSG25", source.getMessage("MSG25", null, null));
+    }
+
+    @Transactional
+    public ResponseDTOMensage religarFuncionario(UUID id) {
+        var funcionario = findByID(id);
+        funcionario.setIsAtivo(true);
+        return new ResponseDTOMensage("MSG27", source.getMessage("MSG27", null, null));
     }
 
     @Transactional
@@ -70,5 +79,11 @@ public class FuncionarioService {
         Specification spec = FuncionarioSpecification.combinacaoFiltros(filtro);
         Page<Funcionario> allEntity =  repository.findAll(spec, page);
         return allEntity.map(FuncionarioMapper::toDTO);
+    }
+
+
+    private Long gerarMatricula() {
+       var entity =  repository.findMaxMatricula();
+       return entity.isPresent() ? entity.get() + 1 : 00000001;
     }
 }

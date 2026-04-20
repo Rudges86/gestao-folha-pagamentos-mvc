@@ -17,6 +17,7 @@ public record FuncionarioResponseDTO(
         String funcao,
         BigDecimal salario,
         Boolean ativo,
+        Long matricula,
         LocalDate dataDesligamento,
         TipoContratacao tipoContratacao,
         List<TelefoneDTO> telefone,

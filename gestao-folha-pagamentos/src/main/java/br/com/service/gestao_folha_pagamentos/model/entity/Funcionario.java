@@ -14,6 +14,7 @@ import java.util.UUID;
 public class Funcionario extends BaseEntity  {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(name = "id", updatable = false, nullable = false, columnDefinition = "UUID")
     private UUID id;
 
     @Column(name = "nome", length = 200, nullable = false)
@@ -44,6 +45,9 @@ public class Funcionario extends BaseEntity  {
 
     @Enumerated(EnumType.STRING)
     private TipoContratacao tipo;
+
+    @Column(name = "matricula", unique = true)
+    private Long matricula;
 
     /**
      * Vou deixar pelo hibernateAtualizar e vou usar a técnica de dirty-checking
@@ -158,16 +162,32 @@ public class Funcionario extends BaseEntity  {
         this.endereco = endereco;
     }
 
+    public Boolean getAtivo() {
+        return isAtivo;
+    }
+
+    public void setAtivo(Boolean ativo) {
+        isAtivo = ativo;
+    }
+
+    public Long getMatricula() {
+        return matricula;
+    }
+
+    public void setMatricula(Long matricula) {
+        this.matricula = matricula;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Funcionario that = (Funcionario) o;
-        return Objects.equals(id, that.id) && Objects.equals(nome, that.nome) && Objects.equals(idade, that.idade) && Objects.equals(dataNascimento, that.dataNascimento) && Objects.equals(sexo, that.sexo) && Objects.equals(escolaridade, that.escolaridade) && Objects.equals(funcao, that.funcao) && Objects.equals(salario, that.salario) && Objects.equals(isAtivo, that.isAtivo) && Objects.equals(dataDesligamento, that.dataDesligamento) && tipo == that.tipo && Objects.equals(telefones, that.telefones) && Objects.equals(endereco, that.endereco);
+        return Objects.equals(id, that.id) && Objects.equals(nome, that.nome) && Objects.equals(idade, that.idade) && Objects.equals(dataNascimento, that.dataNascimento) && Objects.equals(sexo, that.sexo) && Objects.equals(escolaridade, that.escolaridade) && Objects.equals(funcao, that.funcao) && Objects.equals(salario, that.salario) && Objects.equals(isAtivo, that.isAtivo) && Objects.equals(dataDesligamento, that.dataDesligamento) && tipo == that.tipo && Objects.equals(matricula, that.matricula) && Objects.equals(telefones, that.telefones) && Objects.equals(endereco, that.endereco);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, nome, idade, dataNascimento, sexo, escolaridade, funcao, salario, isAtivo, dataDesligamento, tipo, telefones, endereco);
+        return Objects.hash(id, nome, idade, dataNascimento, sexo, escolaridade, funcao, salario, isAtivo, dataDesligamento, tipo, matricula, telefones, endereco);
     }
 }

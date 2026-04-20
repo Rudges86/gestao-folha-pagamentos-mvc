@@ -3,11 +3,14 @@ package br.com.service.gestao_folha_pagamentos.data.mapper;
 import br.com.service.gestao_folha_pagamentos.data.dto.funcionario.FuncionarioRequestDTO;
 import br.com.service.gestao_folha_pagamentos.data.dto.funcionario.FuncionarioResponseDTO;
 import br.com.service.gestao_folha_pagamentos.model.entity.Funcionario;
+import br.com.service.gestao_folha_pagamentos.model.entity.Telefone;
 import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.factory.Mappers;
+
+import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface FuncionarioMapper {
@@ -29,6 +32,7 @@ public interface FuncionarioMapper {
     }
 
     @Mapping(target = "tipoContratacao", source = "tipo")
+    @Mapping(target="telefone", source = "telefones")
     FuncionarioResponseDTO mapToDTO(Funcionario funcionario);
 
     static void update(FuncionarioRequestDTO dto, Funcionario entity) {
@@ -50,6 +54,4 @@ public interface FuncionarioMapper {
             funcionario.getTelefones().forEach(e -> e.setFuncionario(funcionario));
         }
     }
-
-
 }

@@ -5,7 +5,7 @@ import java.util.Arrays;
 public enum TipoContratacao {
     CLT ("CLT", 1),
     PJ("PJ",2),
-    ESTAGIO("ESTÁGIO", 3);
+    ESTAGIO("ESTAGIO", 3);
 
     private String descricao;
     private Integer codigo;
@@ -26,14 +26,21 @@ public enum TipoContratacao {
 
     public static TipoContratacao toEnum(Integer cod) {
         return Arrays.stream(TipoContratacao.values())
-                .filter( codi -> cod.equals(codi))
+                .filter( codi -> cod.equals(codi.getCodigo()))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("Código inválido"));
     }
 
-    public static String descricao(Integer cod) {
+    public static TipoContratacao toEnum(String descricao) {
         return Arrays.stream(TipoContratacao.values())
-                .filter(y -> y.getCodigo().equals(cod))
+                .filter( codi -> descricao.toUpperCase().equals(codi.getDescricao()))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("Código inválido"));
+    }
+
+    public static String descricao(String descricao) {
+        return Arrays.stream(TipoContratacao.values())
+                .filter(y -> y.getDescricao().equals(descricao.toUpperCase()))
                 .map(TipoContratacao::getDescricao)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("Código inválido"));

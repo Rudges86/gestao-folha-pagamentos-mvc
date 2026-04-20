@@ -4,10 +4,10 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 public record TelefoneDTO(
-        @NotNull(message = "{MSG13}")
-        @NotBlank(message = "{MSG13}")
-        String telefone,
-        @NotNull(message = "{MSG14}")
-        @NotBlank(message = "{MSG14}")
+
+        @NotBlank(message = "MSG13")
+        String numero,
+
+        @NotBlank(message = "MSG14")
         String tipo
 ) {}

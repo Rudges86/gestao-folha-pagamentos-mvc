@@ -8,6 +8,7 @@ public record FiltroPesquisaFuncionarioDTO(
         UUID id,
         String nome,
         Integer idade,
+        Long matricula,
         String bairro,
         String estado,
         String pais,
