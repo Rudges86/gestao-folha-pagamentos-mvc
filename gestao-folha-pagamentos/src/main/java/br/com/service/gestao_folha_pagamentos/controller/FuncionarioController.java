@@ -6,6 +6,7 @@ import br.com.service.gestao_folha_pagamentos.data.dto.funcionario.FiltroPesquis
 import br.com.service.gestao_folha_pagamentos.data.dto.funcionario.FuncionarioRequestDTO;
 import br.com.service.gestao_folha_pagamentos.data.dto.funcionario.FuncionarioResponseDTO;
 import br.com.service.gestao_folha_pagamentos.service.FuncionarioService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,6 +19,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/v1/funcionario")
+@Tag(name = "Funcionários", description = "EndPoint de gerenciamento de funcionários.")
 public class FuncionarioController implements FuncionarioDoc {
 
     private FuncionarioService service;

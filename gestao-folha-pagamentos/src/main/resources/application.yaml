@@ -7,6 +7,6 @@ spring:
   profiles:
     active: teste
   spring-doc:
-    paths-to-match: /api/**
+    paths-to-match: /v1/**
     swagger-ui:
       use-root-path: true

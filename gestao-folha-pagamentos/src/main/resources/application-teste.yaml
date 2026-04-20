@@ -37,6 +37,6 @@ spring:
 
 # Configuração do Swagger/OpenAPI
 springdoc:
-  paths-to-match: /api/**
+  paths-to-match: /v1/**
   swagger-ui:
     use-root-path: true

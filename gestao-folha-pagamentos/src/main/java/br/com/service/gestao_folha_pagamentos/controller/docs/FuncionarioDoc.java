@@ -23,7 +23,7 @@ public interface FuncionarioDoc {
 
     @Operation(summary = "Listar todos os funcionários com base no critério de pesquisa",
             description = "EndPoint para listar todos os funcionários com base no critério de pesquisa escolhido.",
-            tags ={"Funcionário"},
+            tags ={"Funcionários"},
             responses = {
                     @ApiResponse(
                             description = "Success",
@@ -48,7 +48,7 @@ public interface FuncionarioDoc {
 
     @Operation(summary = "Cadastra um novo funcionário",
             description = "Cadastra um novo funcionário.",
-            tags = {"Funcionário"},
+            tags = {"Funcionários"},
             responses = {
                     @ApiResponse(
                             description = "Success",
@@ -65,7 +65,7 @@ public interface FuncionarioDoc {
 
     @Operation(summary = "Edita alguma informação do funcionário.",
             description = "Faz o update das informações do usuário",
-            tags = {"Funcionário"},
+            tags = {"Funcionários"},
             responses = {
                     @ApiResponse(
                             description = "Success",
@@ -88,7 +88,7 @@ public interface FuncionarioDoc {
                     para que o cálculo da folha seja feito com os funcionários ativos, mantendo assim um histórico
                     na base caso um funcionário volte para a empresa.                    
                     """,
-            tags = {"Funcionário"},
+            tags = {"Funcionários"},
             responses = {
                     @ApiResponse(
                             description = "Success",
@@ -102,4 +102,26 @@ public interface FuncionarioDoc {
     )
     @PutMapping("/inativarFuncionario/{id}")
     public ResponseEntity<ResponseDTOMensage> desligarFuncionario(@PathVariable(name = "id") UUID id);
+
+
+    @Operation(summary = "Reativar um funcionário na base",
+            description = """
+                    EndPoint criado para reativar um funcionário no caso de voltar para a empresa,
+                    para que o cálculo da folha seja feito com os funcionários ativos, mantendo assim um histórico
+                    na base caso um funcionário volte para a empresa.                    
+                    """,
+            tags = {"Funcionários"},
+            responses = {
+                    @ApiResponse(
+                            description = "Success",
+                            responseCode = "201",
+                            content = @Content(schema = @Schema(implementation = FuncionarioRequestDTO.class))
+                    ),
+                    @ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
+                    @ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content),
+                    @ApiResponse(description = "Internal Server Error", responseCode = "500", content = @Content)
+            }
+    )
+    @PutMapping("/religarFuncionario/{id}")
+    ResponseEntity<ResponseDTOMensage> religarFuncionario(@PathVariable(name = "id") UUID id);
 }
