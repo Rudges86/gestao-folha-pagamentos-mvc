@@ -1,5 +1,7 @@
 package br.com.service.gestao_folha_pagamentos.model.enumerated;
 
+import br.com.service.gestao_folha_pagamentos.exceptions.BussinessException;
+
 import java.util.Arrays;
 
 public enum TipoContratacao {
@@ -28,14 +30,14 @@ public enum TipoContratacao {
         return Arrays.stream(TipoContratacao.values())
                 .filter( codi -> cod.equals(codi.getCodigo()))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("Código inválido"));
+                .orElseThrow(() ->  new BussinessException("MSG30"));
     }
 
     public static TipoContratacao toEnum(String descricao) {
         return Arrays.stream(TipoContratacao.values())
                 .filter( codi -> descricao.toUpperCase().equals(codi.getDescricao()))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("Código inválido"));
+                .orElseThrow(() -> new BussinessException("MSG29"));
     }
 
     public static String descricao(String descricao) {
@@ -43,7 +45,7 @@ public enum TipoContratacao {
                 .filter(y -> y.getDescricao().equals(descricao.toUpperCase()))
                 .map(TipoContratacao::getDescricao)
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("Código inválido"));
+                .orElseThrow(() -> new BussinessException("MSG29"));
     }
 
     public Integer getCodigo() {
